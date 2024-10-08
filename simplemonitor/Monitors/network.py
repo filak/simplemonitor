@@ -50,12 +50,13 @@ class MonitorHTTP(Monitor):
 
         method = self.get_config_option("method")
         if method is not None:
-            if method.strip().upper() in ('GET', 'POST', 'HEAD'):
-                self.method = method.strip().upper()
+            method = method.strip().upper()
+            if method in ["GET", "POST", "HEAD"]:
+                self.method = method
             else:
                 raise ValueError("unsupported HTTP method")
         else:
-            self.method = 'GET'
+            self.method = "GET"
 
         regexp = self.get_config_option("regexp")
         if regexp is not None:
@@ -109,7 +110,6 @@ class MonitorHTTP(Monitor):
             self.auth = HTTPBasicAuth(self.username, self.password)
         else:
             self.auth = None
-
 
     def run_test(self) -> bool:
         start_time = arrow.get()
